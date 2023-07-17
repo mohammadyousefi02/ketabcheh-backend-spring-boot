@@ -1,6 +1,7 @@
 package com.mohammadyousefi.ketabcheh.util;
 
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
+import com.mohammadyousefi.ketabcheh.exception.UnAuthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class Interceptor implements HandlerInterceptor {
             if (handlerMethod.hasMethodAnnotation(Authorization.class)) {
                 String token = request.getHeader("Authorization");
                 if (token == null || !token.startsWith("Bearer ") || !jwt.isTokenValid(token.substring(7)))
-                    System.out.println("");
+                    throw new UnAuthorizedException("you can't access to this endpoint");
                 request.setAttribute("userId", jwt.extractId(token.substring(7)));
             }
         }
