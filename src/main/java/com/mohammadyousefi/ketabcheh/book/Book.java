@@ -25,6 +25,7 @@ public class Book {
     private int stock;
     private String description;
     private int price;
+    private String filename;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "author_id")
