@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class User {
     private String password;
 
     @OneToOne(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
     private Profile profile;
 }

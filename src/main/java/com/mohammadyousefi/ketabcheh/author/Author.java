@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.author;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class Author {
     private String name;
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties({"author"})
     private List<Book> books;
 }

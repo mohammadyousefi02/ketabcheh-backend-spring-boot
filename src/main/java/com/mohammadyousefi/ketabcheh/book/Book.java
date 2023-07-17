@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.book;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mohammadyousefi.ketabcheh.author.Author;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "author_id")
+    @JsonIgnoreProperties({"books"})
     private Author author;
 }
