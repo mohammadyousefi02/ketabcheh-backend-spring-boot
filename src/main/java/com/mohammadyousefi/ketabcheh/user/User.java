@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mohammadyousefi.ketabcheh.cartItem.CartItem;
 import com.mohammadyousefi.ketabcheh.order.Order;
@@ -21,6 +22,8 @@ public class User {
 
     private String username;
     private String email;
+
+    @JsonIgnore
     private String password;
 
     @OneToOne(mappedBy = "user")
