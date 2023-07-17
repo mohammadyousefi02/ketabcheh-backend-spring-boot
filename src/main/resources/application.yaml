@@ -4,3 +4,6 @@ spring:
     username: postgres
     password: 123321123
 
+jwt:
+  secret: thisismyscretkeyforencodinganddecodingjwttoken
+  expiration: 86400000
