@@ -28,6 +28,10 @@ public class Jwt {
         return createToken(claims, userId);
     }
 
+    public Long extractId(String token) {
+        return Long.valueOf(extractClaim(token, Claims::getSubject));
+    }
+
     public Boolean isTokenValid(String token) {
         return !isTokenExpired(token);
     }
@@ -51,10 +55,6 @@ public class Jwt {
     private Boolean isTokenExpired(String token) {
         Date date = extractExpiration(token);
         return date.before(new Date());
-    }
-
-    private Long extractId(String token) {
-        return Long.valueOf(extractClaim(token, Claims::getSubject));
     }
 
     private Date extractExpiration(String token) {
