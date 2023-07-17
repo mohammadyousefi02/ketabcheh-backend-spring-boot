@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,7 +21,12 @@ public class Jwt {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String createToken(Map<String, Objects> claims, Long userId) {
+    private String generateToken(Long userId) {
+        Map<String, Objects> claims = new HashMap<>();
+        return createToken(claims, userId);
+    }
+
+    private String createToken(Map<String, Objects> claims, Long userId) {
         return Jwts.builder()
                 .signWith(generateKey())
                 .setClaims(claims)
