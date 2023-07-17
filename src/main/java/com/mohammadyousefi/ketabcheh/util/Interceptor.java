@@ -3,14 +3,14 @@ package com.mohammadyousefi.ketabcheh.util;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Component
 public class Interceptor implements HandlerInterceptor {
-    private Jwt jwt;
+    private final Jwt jwt;
 
-    @Autowired
     public Interceptor(Jwt jwt) {
         this.jwt = jwt;
     }
