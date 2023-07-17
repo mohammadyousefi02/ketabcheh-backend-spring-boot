@@ -1,8 +1,10 @@
 package com.mohammadyousefi.ketabcheh.book;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.mohammadyousefi.ketabcheh.author.Author;
 import com.mohammadyousefi.ketabcheh.category.Category;
+import com.mohammadyousefi.ketabcheh.image.Image;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,6 +30,10 @@ public class Book {
     @JoinColumn(name = "author_id")
     @JsonIgnoreProperties({"books"})
     private Author author;
+
+    @OneToMany(mappedBy = "book")
+    @JsonIncludeProperties({"filename"})
+    private List<Image> images;
 
     @ManyToMany
     @JoinTable(name = "book_category",
