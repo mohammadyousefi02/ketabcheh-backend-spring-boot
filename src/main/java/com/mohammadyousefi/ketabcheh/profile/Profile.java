@@ -16,7 +16,7 @@ public class Profile {
     @Column(name = "profile_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"profile"})
     private User user;
