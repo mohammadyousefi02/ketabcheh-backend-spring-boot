@@ -21,7 +21,7 @@ public class Profile {
     @JsonIgnoreProperties({"profile"})
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_profile",
             joinColumns = {@JoinColumn(name = "profile_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")}

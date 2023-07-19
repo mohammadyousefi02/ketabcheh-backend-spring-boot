@@ -17,18 +17,18 @@ public class Category {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "parent_category_id")
     @JsonIgnoreProperties({"categories"})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"parentCategory"})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"categories"})
     private List<Book> books;
 }

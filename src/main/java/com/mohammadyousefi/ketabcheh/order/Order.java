@@ -21,7 +21,7 @@ public class Order {
     private String city;
     private String address;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"order"})
     private List<OrderItem> orderItems;
 

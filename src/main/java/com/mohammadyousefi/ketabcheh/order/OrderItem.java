@@ -13,10 +13,11 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private Long id;
 
+    private String title;
     private int quantity;
     private int price;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonIgnoreProperties({"orderItems"})
     private Order order;

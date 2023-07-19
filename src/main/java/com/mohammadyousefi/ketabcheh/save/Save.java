@@ -14,11 +14,11 @@ public class Save {
     @Column(name = "save_id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"save"})
     private User user;
