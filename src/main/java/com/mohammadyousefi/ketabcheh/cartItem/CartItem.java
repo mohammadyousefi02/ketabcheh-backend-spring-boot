@@ -16,11 +16,11 @@ public class CartItem {
 
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"cart"})
     private User user;

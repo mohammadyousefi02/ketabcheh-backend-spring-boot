@@ -30,11 +30,11 @@ public class User {
     @JsonIgnoreProperties({"user"})
     private Profile profile;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user"})
     private List<CartItem> cart;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user"})
     private List<Save> save;
 

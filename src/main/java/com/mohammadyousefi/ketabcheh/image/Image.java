@@ -15,7 +15,7 @@ public class Image {
 
     private String filename;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     @JsonIgnoreProperties({"images"})
     private Book book;
