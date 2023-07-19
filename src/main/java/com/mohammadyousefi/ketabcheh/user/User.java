@@ -26,7 +26,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user"})
     private Profile profile;
 
