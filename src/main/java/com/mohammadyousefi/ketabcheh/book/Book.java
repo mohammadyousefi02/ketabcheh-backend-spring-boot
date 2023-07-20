@@ -45,7 +45,7 @@ public class Book {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
-    @JsonIgnoreProperties({"products"})
+    @JsonIgnoreProperties({"books"})
     private List<Category> categories;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
