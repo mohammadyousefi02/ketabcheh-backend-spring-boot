@@ -23,8 +23,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public Response<String> login(@RequestBody LoginDto loginDto) {
-        String token = userService.login(loginDto);
+        String token = userService.login(loginDto, false);
         return new Response<>(token, HttpStatus.OK.value());
     }
+
+    @PostMapping("/admin")
+    public Response<String> adminLogin(@RequestBody LoginDto loginDto) {
+        String token = userService.login(loginDto, true);
+        return new Response<>(token, HttpStatus.OK.value());
+    }
+
 
 }

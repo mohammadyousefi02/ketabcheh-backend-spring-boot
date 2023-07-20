@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.util;
 
+import com.mohammadyousefi.ketabcheh.auth.Admin;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.exception.UnAuthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,13 +19,14 @@ public class Interceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (handler instanceof HandlerMethod handlerMethod) {
-            if (handlerMethod.hasMethodAnnotation(Authorization.class)) {
-                String token = request.getHeader("Authorization");
-                if (token == null || !token.startsWith("Bearer ") || !jwt.isTokenValid(token.substring(7)))
-                    throw new UnAuthorizedException("you can't access to this endpoint");
-                request.setAttribute("userId", jwt.extractId(token.substring(7)));
-            }
+        if (handler instanceof HandlerMethod handlerMethod && (handlerMethod.hasMethodAnnotation(Authorization.class))) {
+            String token = request.getHeader("Authorization");
+            if (token == null || !token.startsWith("Bearer ") || Boolean.TRUE.equals(!jwt.isTokenValid(token.substring(7))))
+                throw new UnAuthorizedException("you can't access to this endpoint");
+            String correctToken = token.substring(7);
+            if (((HandlerMethod) handler).hasMethodAnnotation(Admin.class) && !Boolean.TRUE.equals(jwt.isAdmin(correctToken)))
+                throw new UnAuthorizedException("you can't access to this endpoint");
+            request.setAttribute("userId", jwt.extractId(correctToken));
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
     String signUp(SignupDto signupDto);
-    String login(LoginDto loginDto);
+    String login(LoginDto loginDto, Boolean adminRoute);
     Optional<User> findById(Long id);
     Optional<User> findByEmail(String email);
 
