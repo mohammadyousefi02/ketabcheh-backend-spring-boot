@@ -23,6 +23,9 @@ public class User {
     private String username;
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     @JsonIgnore
     private String password;
 
