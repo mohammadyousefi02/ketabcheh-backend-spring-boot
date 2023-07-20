@@ -10,7 +10,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 @Component
@@ -24,7 +23,7 @@ public class Jwt {
     private Long expiration;
 
     public String generateToken(Long userId) {
-        Map<String, Objects> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userId);
     }
 
@@ -36,7 +35,7 @@ public class Jwt {
         return !isTokenExpired(token);
     }
 
-    private String createToken(Map<String, Objects> claims, Long userId) {
+    private String createToken(Map<String, Object> claims, Long userId) {
         return Jwts.builder()
                 .signWith(generateKey())
                 .setClaims(claims)
