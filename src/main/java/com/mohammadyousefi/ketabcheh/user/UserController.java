@@ -1,5 +1,7 @@
 package com.mohammadyousefi.ketabcheh.user;
 
+import com.mohammadyousefi.ketabcheh.auth.Admin;
+import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @Authorization
+    @Admin
     public Response<String> deleteById(@PathVariable Long id) {
         String res = userService.deleteById(id);
         return new Response<>(res, HttpStatus.OK.value());
