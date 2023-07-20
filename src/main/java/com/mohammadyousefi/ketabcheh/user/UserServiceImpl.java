@@ -35,16 +35,19 @@ public class UserServiceImpl implements UserService {
         profile.setUser(newUser);
         newUser.setProfile(profile);
         newUser = userRepository.save(newUser);
-        return jwt.generateToken(newUser.getId());
+        return jwt.generateToken(newUser.getId(), newUser.getRole().toString().describeConstable());
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public String login(LoginDto loginDto, Boolean adminRoute) {
+        String error = "email or password is incorrect";
         Optional<User> user = userRepository.findByEmail(loginDto.getEmail());
-        if (user.isEmpty()) throw new BadRequestException("email or password is incorrect");
+        if (user.isEmpty()) throw new BadRequestException(error);
         if (!passwordEncoder.matches(loginDto.getPassword(), user.get().getPassword()))
-            throw new BadRequestException("email or password is incorrect");
-        return jwt.generateToken(user.get().getId());
+            throw new BadRequestException(error);
+        if (Boolean.TRUE.equals(adminRoute) && !user.get().getRole().toString().equals("ADMIN"))
+            throw new BadRequestException(error);
+        return jwt.generateToken(user.get().getId(), user.get().getRole().toString().describeConstable());
     }
 
     @Override
@@ -60,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteById(Long id) {
         Optional<User> user = findById(id);
-        if(user.isEmpty()) throw new NotFoundException("there is no user with this id");
+        if (user.isEmpty()) throw new NotFoundException("there is no user with this id");
         userRepository.deleteById(id);
         return "successfully deleted";
     }
