@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -22,13 +20,20 @@ public class Jwt {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String generateToken(Long userId) {
+    public String generateToken(Long userId, Optional<String> role) {
         Map<String, Object> claims = new HashMap<>();
+        role.ifPresent(s -> claims.put("role", s));
         return createToken(claims, userId);
     }
 
     public Long extractId(String token) {
         return Long.valueOf(extractClaim(token, Claims::getSubject));
+    }
+
+    public Boolean isAdmin(String token) {
+        String role = (String) extractClaim(token, claims -> claims.get("role"));
+        if(role == null) return false;
+        return Boolean.TRUE.equals(role.equals("ADMIN"));
     }
 
     public Boolean isTokenValid(String token) {
