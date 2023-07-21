@@ -24,12 +24,12 @@ public class Category {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"parentCategory"})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Category> categories;
 
-    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"categories"})
     private List<Book> books;
 }
