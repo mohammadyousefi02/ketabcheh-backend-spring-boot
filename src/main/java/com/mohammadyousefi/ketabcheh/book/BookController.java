@@ -68,6 +68,7 @@ public class BookController {
         List<Image> images = new ArrayList<>();
         Image image = new Image();
         image.setFilename(Upload.uploadHandler(bookDto.getImage(), "thumbnails"));
+        image.setBook(book);
         images.add(image);
         book.setImages(images);
         if (bookDto.getFile().isEmpty()) throw new BadRequestException("you should upload pdf file");
