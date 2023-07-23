@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.category;
 
+import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category save(CreateCategoryDto createCategoryDto) {
+        Optional<Category> optionalCategory = findByName(createCategoryDto.getName());
+        if(optionalCategory.isPresent()) throw new BadRequestException("a category with this name is already exist");
         Category category = new Category();
         category.setName(createCategoryDto.getName());
         if (createCategoryDto.getParentCategoryId() != null) {
