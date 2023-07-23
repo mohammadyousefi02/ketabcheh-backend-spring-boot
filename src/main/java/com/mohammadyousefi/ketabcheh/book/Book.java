@@ -36,7 +36,7 @@ public class Book {
     @JsonIgnoreProperties({"books"})
     private Author author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIncludeProperties({"filename"})
     private List<Image> images;
 
