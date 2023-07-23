@@ -4,7 +4,6 @@ import com.mohammadyousefi.ketabcheh.auth.Admin;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.response.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -19,10 +18,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable Long id) {
+    public Response<User> findById(@PathVariable Long id) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isEmpty()) throw new NotFoundException("there is no user with this id");
-        return userOptional.get();
+        return new Response<>(userOptional.get());
     }
 
     @DeleteMapping("/{id}")
@@ -30,6 +29,6 @@ public class UserController {
     @Admin
     public Response<String> deleteById(@PathVariable Long id) {
         String res = userService.deleteById(id);
-        return new Response<>(res, HttpStatus.OK.value());
+        return new Response<>(res);
     }
 }

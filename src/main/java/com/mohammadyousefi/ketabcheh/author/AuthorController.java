@@ -21,14 +21,14 @@ public class AuthorController {
 
     @GetMapping
     public Response<List<Author>> findAll() {
-        return new Response<>(authorService.findAll(), HttpStatus.OK.value());
+        return new Response<>(authorService.findAll());
     }
 
     @GetMapping("/{id}")
     public Response<Author> findById(@PathVariable Long id) {
         Optional<Author> author = authorService.findById(id);
         if (author.isEmpty()) throw new NotFoundException("there is no author with this id");
-        return new Response<>(author.get(), HttpStatus.OK.value());
+        return new Response<>(author.get());
     }
 
     @PostMapping
@@ -43,6 +43,6 @@ public class AuthorController {
     @Authorization
     @Admin
     public Response<String> deleteById(@PathVariable Long id) {
-        return new Response<>(authorService.deleteById(id), HttpStatus.OK.value());
+        return new Response<>(authorService.deleteById(id));
     }
 }

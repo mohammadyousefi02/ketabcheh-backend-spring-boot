@@ -33,21 +33,21 @@ public class BookController {
 
     @GetMapping
     public Response<List<Book>> findAll() {
-        return new Response<>(bookService.findAll(), HttpStatus.OK.value());
+        return new Response<>(bookService.findAll());
     }
 
     @GetMapping("/{id}")
     public Response<Book> findById(@PathVariable Long id) {
         Optional<Book> book = bookService.findById(id);
         if (book.isEmpty()) throw new NotFoundException("there is no book with this id");
-        return new Response<>(book.get(), HttpStatus.OK.value());
+        return new Response<>(book.get());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
     @Admin
-    public Book create(@ModelAttribute BookDto bookDto) {
+    public Response<Book> create(@ModelAttribute BookDto bookDto) {
         Book book = new Book();
         Optional<Author> author = authorService.findById(bookDto.getAuthorId());
         if (author.isEmpty()) throw new NotFoundException("there is no author with this id");
@@ -68,6 +68,7 @@ public class BookController {
         List<Image> images = new ArrayList<>();
         Image image = new Image();
         image.setFilename(Upload.uploadHandler(bookDto.getImage(), "thumbnails"));
+        image.setBook(book);
         images.add(image);
         book.setImages(images);
         if (bookDto.getFile().isEmpty()) throw new BadRequestException("you should upload pdf file");
@@ -75,13 +76,13 @@ public class BookController {
         book.setFilename(fileName);
         book.setType(bookDto.getFile().getContentType());
         book.setSize(bookDto.getFile().getSize() + "bytes");
-        return bookService.save(book);
+        return new Response<>(bookService.save(book), HttpStatus.CREATED.value());
     }
 
     @DeleteMapping("/{id}")
     @Authorization
     @Admin
     public Response<String> deleteById(@PathVariable Long id) {
-        return new Response<>(bookService.deleteById(id), HttpStatus.OK.value());
+        return new Response<>(bookService.deleteById(id));
     }
 }
