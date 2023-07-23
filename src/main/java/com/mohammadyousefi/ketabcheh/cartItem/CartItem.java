@@ -14,7 +14,7 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private Long id;
 
-    private int quantity;
+    private int quantity = 1;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -24,6 +24,9 @@ public class CartItem {
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"cart"})
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private CartItemType type;
 
     public void increaseQuantity() {
         this.quantity++;
