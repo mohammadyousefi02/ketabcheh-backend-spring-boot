@@ -24,4 +24,12 @@ public class CartItem {
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"cart"})
     private User user;
+
+    public void increaseQuantity() {
+        this.quantity++;
+    }
+
+    public void decreaseQuantity() {
+        this.quantity--;
+    }
 }
