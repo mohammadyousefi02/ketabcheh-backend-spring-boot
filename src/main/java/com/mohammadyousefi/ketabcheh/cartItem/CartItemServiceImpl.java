@@ -7,7 +7,9 @@ import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.user.User;
 import com.mohammadyousefi.ketabcheh.user.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,11 @@ public class CartItemServiceImpl implements CartItemService {
         this.cartItemRepository = cartItemRepository;
         this.userService = userService;
         this.bookService = bookService;
+    }
+
+    @Override
+    public Optional<List<CartItem>> findByUserId(Long userId) {
+        return cartItemRepository.findByUser_Id(userId);
     }
 
     @Override
@@ -66,6 +73,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional
     public String clear(Long userId) {
         findUserById(userId);
         cartItemRepository.deleteByUser_Id(userId);
