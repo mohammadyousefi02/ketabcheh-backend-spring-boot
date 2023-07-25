@@ -3,7 +3,6 @@ package com.mohammadyousefi.ketabcheh.cartItem;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +56,7 @@ public class CartItemController {
         return new Response<>(cartItemService.clear(getId(request)));
     }
 
-    private Long getId(@NotNull HttpServletRequest request) {
+    private Long getId(HttpServletRequest request) {
         return (Long) request.getAttribute("userId");
     }
 
