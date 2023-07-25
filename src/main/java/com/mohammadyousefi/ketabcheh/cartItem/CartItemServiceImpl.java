@@ -7,7 +7,9 @@ import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.user.User;
 import com.mohammadyousefi.ketabcheh.user.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,8 +25,13 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public Optional<List<CartItem>> findByUserId(Long userId) {
+        return cartItemRepository.findByUser_Id(userId);
+    }
+
+    @Override
     public String addToCart(Long userId, Long bookId) {
-        Optional<CartItem> cartItemOptional = cartItemRepository.findByUser_IdAndBook_IdAndType(userId, bookId, CartItemType.ONLINE);
+        Optional<CartItem> cartItemOptional = cartItemRepository.findByUser_IdAndBook_IdAndType(userId, bookId, CartItemType.OFFLINE);
         if (cartItemOptional.isPresent()) {
             CartItem cartItem = cartItemOptional.get();
             throwBookStockError(checkStock(cartItem));
@@ -66,6 +73,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    @Transactional
     public String clear(Long userId) {
         findUserById(userId);
         cartItemRepository.deleteByUser_Id(userId);

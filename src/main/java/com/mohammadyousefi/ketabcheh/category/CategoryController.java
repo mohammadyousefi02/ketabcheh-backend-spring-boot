@@ -1,5 +1,7 @@
 package com.mohammadyousefi.ketabcheh.category;
 
+import com.mohammadyousefi.ketabcheh.auth.Admin;
+import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +28,16 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Authorization
+    @Admin
     @ResponseStatus(HttpStatus.CREATED)
     public Response<Category> create(@RequestBody CreateCategoryDto createCategoryDto) {
         return new Response<>(categoryService.save(createCategoryDto), HttpStatus.CREATED.value());
     }
 
     @DeleteMapping("/{id}")
+    @Authorization
+    @Admin
     public Response<String> deleteById(@PathVariable Long id) {
         return new Response<>(categoryService.deleteById(id));
     }
