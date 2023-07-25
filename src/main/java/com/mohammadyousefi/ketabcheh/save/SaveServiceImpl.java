@@ -6,6 +6,7 @@ import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.user.User;
 import com.mohammadyousefi.ketabcheh.user.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class SaveServiceImpl implements SaveService {
     }
 
     @Override
+    @Transactional
     public String unsave(Long userId, Long bookId) {
         Optional<Save> saveOptional = saveRepository.findByUser_IdAndBook_Id(userId, bookId);
         if (saveOptional.isEmpty()) throw new NotFoundException("there is no save with this user and book");
