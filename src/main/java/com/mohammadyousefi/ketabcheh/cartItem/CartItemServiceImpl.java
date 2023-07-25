@@ -31,7 +31,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public String addToCart(Long userId, Long bookId) {
-        Optional<CartItem> cartItemOptional = cartItemRepository.findByUser_IdAndBook_IdAndType(userId, bookId, CartItemType.ONLINE);
+        Optional<CartItem> cartItemOptional = cartItemRepository.findByUser_IdAndBook_IdAndType(userId, bookId, CartItemType.OFFLINE);
         if (cartItemOptional.isPresent()) {
             CartItem cartItem = cartItemOptional.get();
             throwBookStockError(checkStock(cartItem));
