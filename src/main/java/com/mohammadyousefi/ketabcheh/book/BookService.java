@@ -8,5 +8,5 @@ public interface BookService {
     Optional<Book> findById(Long id);
     Book save(Book book);
     String deleteById(Long id);
-    void decreaseStock(Long bookId);
+    void decreaseStock(Long bookId, int quantity);
 }
