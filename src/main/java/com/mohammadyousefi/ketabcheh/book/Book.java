@@ -56,7 +56,7 @@ public class Book {
     @JsonIgnore
     private List<CartItem> cartItems;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Profile> profiles;
 
