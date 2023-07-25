@@ -1,6 +1,8 @@
 package com.mohammadyousefi.ketabcheh.save;
 
+import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +15,16 @@ public class SaveController {
         this.saveService = saveService;
     }
 
-    @PostMapping
+    @PostMapping("/{bookId}")
+    @Authorization
     @ResponseStatus(HttpStatus.CREATED)
-    public Response<String> save(@RequestBody SaveDto saveDto) {
-        return new Response<>(saveService.save(saveDto.getUserId(), saveDto.getBookId()), HttpStatus.CREATED.value());
+    public Response<String> save(HttpServletRequest request, @PathVariable Long bookId) {
+        return new Response<>(saveService.save((Long) request.getAttribute("userId"), bookId), HttpStatus.CREATED.value());
     }
 
-    @DeleteMapping
-    public Response<String> unsave(@RequestBody SaveDto saveDto) {
-        return new Response<>(saveService.unsave(saveDto.getUserId(), saveDto.getBookId()));
+    @DeleteMapping("/{bookId}")
+    @Authorization
+    public Response<String> unsave(HttpServletRequest request, @PathVariable Long bookId) {
+        return new Response<>(saveService.unsave((Long) request.getAttribute("userId"), bookId));
     }
 }
