@@ -32,8 +32,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public String deleteById(Long id) {
         Optional<Book> book = findById(id);
-        if(book.isEmpty()) throw new NotFoundException("there is no book with this id");
+        if (book.isEmpty()) throw new NotFoundException("there is no book with this id");
         bookRepository.deleteById(id);
         return "successfully deleted";
+    }
+
+    @Override
+    public void decreaseStock(Long bookId) {
+        Optional<Book> bookOptional = findById(bookId);
+        if (bookOptional.isEmpty()) throw new NotFoundException("there is no book with this id");
+        Book book = bookOptional.get();
+        book.setStock(book.getStock() - 1);
+        save(book);
     }
 }
