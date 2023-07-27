@@ -1,6 +1,7 @@
 package com.mohammadyousefi.ketabcheh.author;
 
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public String deleteById(Long id) {
         Optional<Author> author = findById(id);
-        if(author.isEmpty()) throw new NotFoundException("there is no author with this id");
+        if(author.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("author"));
         authorRepository.deleteById(id);
         return "successfully deleted";
     }

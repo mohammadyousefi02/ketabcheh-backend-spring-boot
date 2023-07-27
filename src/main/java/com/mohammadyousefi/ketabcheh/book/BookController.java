@@ -7,6 +7,7 @@ import com.mohammadyousefi.ketabcheh.author.AuthorService;
 import com.mohammadyousefi.ketabcheh.category.Category;
 import com.mohammadyousefi.ketabcheh.category.CategoryService;
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.image.Image;
 import com.mohammadyousefi.ketabcheh.response.Response;
@@ -50,7 +51,7 @@ public class BookController {
     public Response<Book> create(@ModelAttribute BookDto bookDto) {
         Book book = new Book();
         Optional<Author> author = authorService.findById(bookDto.getAuthorId());
-        if (author.isEmpty()) throw new NotFoundException("there is no author with this id");
+        if (author.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("author"));
         book.setAuthor(author.get());
 
         List<Category> categories = new ArrayList<>();

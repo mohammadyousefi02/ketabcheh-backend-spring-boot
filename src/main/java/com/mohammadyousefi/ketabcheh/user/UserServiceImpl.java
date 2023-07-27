@@ -3,6 +3,7 @@ package com.mohammadyousefi.ketabcheh.user;
 import com.mohammadyousefi.ketabcheh.auth.LoginDto;
 import com.mohammadyousefi.ketabcheh.auth.SignupDto;
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import com.mohammadyousefi.ketabcheh.util.Jwt;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteById(Long id) {
         Optional<User> user = findById(id);
-        if (user.isEmpty()) throw new NotFoundException("there is no user with this id");
+        if (user.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("user"));
         userRepository.deleteById(id);
         return "successfully deleted";
     }

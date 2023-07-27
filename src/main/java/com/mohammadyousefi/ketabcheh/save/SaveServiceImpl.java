@@ -2,6 +2,7 @@ package com.mohammadyousefi.ketabcheh.save;
 
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.book.BookService;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.user.User;
 import com.mohammadyousefi.ketabcheh.user.UserService;
@@ -25,9 +26,9 @@ public class SaveServiceImpl implements SaveService {
     @Override
     public String save(Long userId, Long bookId) {
         Optional<User> userOptional = userService.findById(userId);
-        if (userOptional.isEmpty()) throw new NotFoundException("there is no user with this id");
+        if (userOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("user"));
         Optional<Book> book = bookService.findById(bookId);
-        if (book.isEmpty()) throw new NotFoundException("there is no book with this id");
+        if (book.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("book"));
         Optional<Save> saveOptional = saveRepository.findByUser_IdAndBook_Id(userId, bookId);
         if (saveOptional.isEmpty()) {
             Save save = new Save();
@@ -42,7 +43,7 @@ public class SaveServiceImpl implements SaveService {
     @Transactional
     public String unsave(Long userId, Long bookId) {
         Optional<Save> saveOptional = saveRepository.findByUser_IdAndBook_Id(userId, bookId);
-        if (saveOptional.isEmpty()) throw new NotFoundException("there is no save with this user and book");
+        if (saveOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("save", "user and book"));
         saveRepository.deleteByUser_IdAndBook_Id(userId, bookId);
         return "successfully deleted";
     }

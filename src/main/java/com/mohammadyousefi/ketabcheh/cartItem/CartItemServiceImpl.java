@@ -3,6 +3,7 @@ package com.mohammadyousefi.ketabcheh.cartItem;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.book.BookService;
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.user.User;
 import com.mohammadyousefi.ketabcheh.user.UserService;
@@ -82,19 +83,19 @@ public class CartItemServiceImpl implements CartItemService {
 
     private CartItem findOneByUserIdAndBookId(Long userId, Long bookId, CartItemType cartItemType) {
         Optional<CartItem> cartItemOptional = cartItemRepository.findByUser_IdAndBook_IdAndType(userId, bookId, cartItemType);
-        if (cartItemOptional.isEmpty()) throw new NotFoundException("there is no cart item with this id");
+        if (cartItemOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("cart item"));
         return cartItemOptional.get();
     }
 
     private User findUserById(Long userId) {
         Optional<User> userOptional = userService.findById(userId);
-        if (userOptional.isEmpty()) throw new NotFoundException("there is no user with this id");
+        if (userOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("user"));
         return userOptional.get();
     }
 
     private Book findBookById(Long bookId) {
         Optional<Book> bookOptional = bookService.findById(bookId);
-        if (bookOptional.isEmpty()) throw new NotFoundException("there is no book with this id");
+        if (bookOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("book"));
         return bookOptional.get();
     }
 

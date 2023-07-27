@@ -1,6 +1,7 @@
 package com.mohammadyousefi.ketabcheh.category;
 
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        if (category.isEmpty()) throw new NotFoundException("there is no category with this id");
+        if (category.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("category"));
         return category.get();
     }
 

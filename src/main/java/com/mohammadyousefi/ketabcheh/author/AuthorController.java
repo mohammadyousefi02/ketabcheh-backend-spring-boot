@@ -2,6 +2,7 @@ package com.mohammadyousefi.ketabcheh.author;
 
 import com.mohammadyousefi.ketabcheh.auth.Admin;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AuthorController {
     @GetMapping("/{id}")
     public Response<Author> findById(@PathVariable Long id) {
         Optional<Author> author = authorService.findById(id);
-        if (author.isEmpty()) throw new NotFoundException("there is no author with this id");
+        if (author.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("author"));
         return new Response<>(author.get());
     }
 
