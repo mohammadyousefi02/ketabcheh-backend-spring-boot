@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.book;
 
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public String deleteById(Long id) {
         Optional<Book> book = findById(id);
-        if (book.isEmpty()) throw new NotFoundException("there is no book with this id");
+        if (book.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("book"));
         bookRepository.deleteById(id);
         return "successfully deleted";
     }
@@ -40,7 +41,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void decreaseStock(Long bookId, int quantity) {
         Optional<Book> bookOptional = findById(bookId);
-        if (bookOptional.isEmpty()) throw new NotFoundException("there is no book with this id");
+        if (bookOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("book"));
         Book book = bookOptional.get();
         book.setStock(book.getStock() - quantity);
         save(book);

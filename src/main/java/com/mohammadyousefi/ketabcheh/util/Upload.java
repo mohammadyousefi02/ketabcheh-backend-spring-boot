@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.util;
 
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.ExpectationFailed;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import org.springframework.core.io.Resource;
@@ -29,7 +30,7 @@ public class Upload {
             file.transferTo(filePath);
             return fileName;
         } catch (Exception e) {
-            throw new ExpectationFailed("an error was happened please try again");
+            throw new ExpectationFailed(ErrorMessages.expectationFailed());
         }
     }
 
@@ -39,9 +40,9 @@ public class Upload {
         try {
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) return resource;
-            else throw new NotFoundException("there is no file with this name");
+            else throw new NotFoundException(ErrorMessages.notFound("file", "name"));
         } catch (Exception e) {
-            throw new ExpectationFailed("an error was happened please try again");
+            throw new ExpectationFailed(ErrorMessages.expectationFailed());
         }
 
     }
