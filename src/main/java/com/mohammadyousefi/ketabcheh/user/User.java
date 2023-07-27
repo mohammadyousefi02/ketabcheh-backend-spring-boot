@@ -3,6 +3,7 @@ package com.mohammadyousefi.ketabcheh.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mohammadyousefi.ketabcheh.cartItem.CartItem;
+import com.mohammadyousefi.ketabcheh.comment.Comment;
 import com.mohammadyousefi.ketabcheh.order.Order;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import com.mohammadyousefi.ketabcheh.save.Save;
@@ -44,4 +45,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties({"user"})
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"user"})
+    private List<Comment> comments;
 }

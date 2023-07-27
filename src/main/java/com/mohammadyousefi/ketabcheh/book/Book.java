@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.mohammadyousefi.ketabcheh.author.Author;
 import com.mohammadyousefi.ketabcheh.cartItem.CartItem;
 import com.mohammadyousefi.ketabcheh.category.Category;
+import com.mohammadyousefi.ketabcheh.comment.Comment;
 import com.mohammadyousefi.ketabcheh.image.Image;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import com.mohammadyousefi.ketabcheh.save.Save;
@@ -47,6 +48,10 @@ public class Book {
     )
     @JsonIgnoreProperties({"books", "parentCategory", "categories"})
     private List<Category> categories;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"book"})
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIgnore
