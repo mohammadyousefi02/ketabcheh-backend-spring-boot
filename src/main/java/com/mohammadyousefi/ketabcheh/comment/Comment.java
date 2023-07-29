@@ -23,7 +23,7 @@ public class Comment {
     @JsonIgnoreProperties({"comments"})
     private Comment replyTo;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "replyTo", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"comment"})
     private List<Comment> comments;
 
