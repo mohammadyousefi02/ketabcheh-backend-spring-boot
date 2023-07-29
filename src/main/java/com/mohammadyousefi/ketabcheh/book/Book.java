@@ -9,11 +9,14 @@ import com.mohammadyousefi.ketabcheh.category.Category;
 import com.mohammadyousefi.ketabcheh.comment.Comment;
 import com.mohammadyousefi.ketabcheh.image.Image;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
+import com.mohammadyousefi.ketabcheh.rate.Rate;
 import com.mohammadyousefi.ketabcheh.save.Save;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Data
@@ -42,16 +45,17 @@ public class Book {
     private List<Image> images;
 
     @ManyToMany
-    @JoinTable(name = "book_category",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
-    )
+    @JoinTable(name = "book_category", joinColumns = {@JoinColumn(name = "book_id")}, inverseJoinColumns = {@JoinColumn(name = "category_id")})
     @JsonIgnoreProperties({"books", "parentCategory", "categories"})
     private List<Category> categories;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"book"})
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"book"})
+    private List<Rate> rates;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -64,5 +68,16 @@ public class Book {
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Profile> profiles;
+
+    public String getRates() {
+        AtomicInteger rates = new AtomicInteger(0);
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        float finalRates = 0;
+        if (this.rates != null) {
+            this.rates.forEach(rate -> rates.addAndGet(rate.getRate()));
+            finalRates = (float) rates.get() / (this.rates.isEmpty() ? 1 : this.rates.size());
+        }
+        return decimalFormat.format(finalRates);
+    }
 
 }
