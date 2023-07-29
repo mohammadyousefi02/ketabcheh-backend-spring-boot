@@ -6,6 +6,7 @@ import com.mohammadyousefi.ketabcheh.cartItem.CartItem;
 import com.mohammadyousefi.ketabcheh.comment.Comment;
 import com.mohammadyousefi.ketabcheh.order.Order;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
+import com.mohammadyousefi.ketabcheh.rate.Rate;
 import com.mohammadyousefi.ketabcheh.save.Save;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -49,4 +50,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user"})
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"user"})
+    private List<Rate> rates;
 }
