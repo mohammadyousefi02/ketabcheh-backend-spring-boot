@@ -8,8 +8,10 @@ import com.mohammadyousefi.ketabcheh.order.Order;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import com.mohammadyousefi.ketabcheh.rate.Rate;
 import com.mohammadyousefi.ketabcheh.save.Save;
+import com.mohammadyousefi.ketabcheh.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -54,4 +56,14 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"user"})
     private List<Rate> rates;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Where(clause = "role = 'USER'")
+    @JsonIgnoreProperties({"user"})
+    private List<Ticket> tickets;
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    @Where(clause = "role = 'ADMIN'")
+    @JsonIgnoreProperties({"admin"})
+    private List<Ticket> adminTickets;
 }
