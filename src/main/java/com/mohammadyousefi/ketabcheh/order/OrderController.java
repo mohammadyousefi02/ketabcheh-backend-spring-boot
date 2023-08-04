@@ -19,7 +19,18 @@ public class OrderController {
     @Authorization
     @ResponseStatus(HttpStatus.CREATED)
     public Response<Order> order(HttpServletRequest request, @RequestBody OrderDto orderDto) {
+        return orderHandler(request, orderDto, false);
+    }
+
+    @PostMapping("wallet")
+    @Authorization
+    @ResponseStatus(HttpStatus.CREATED)
+    public Response<Order> orderByWallet(HttpServletRequest request, @RequestBody OrderDto orderDto) {
+        return orderHandler(request, orderDto, true);
+    }
+
+    private Response<Order> orderHandler(HttpServletRequest request, OrderDto orderDto, Boolean useWallet) {
         orderDto.setUserId((Long) request.getAttribute("userId"));
-        return new Response<>(orderService.order(orderDto), HttpStatus.CREATED.value());
+        return new Response<>(orderService.order(orderDto, useWallet), HttpStatus.CREATED.value());
     }
 }
