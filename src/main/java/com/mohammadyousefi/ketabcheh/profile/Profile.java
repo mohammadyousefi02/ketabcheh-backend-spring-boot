@@ -16,6 +16,8 @@ public class Profile {
     @Column(name = "profile_id")
     private Long id;
 
+    private Long wallet;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"profile"})
