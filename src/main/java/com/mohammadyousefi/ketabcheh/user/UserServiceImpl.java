@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String signUp(SignupDto signupDto) {
-        Optional<User> user = userRepository.findByEmail(signupDto.getEmail());
+        Optional<User> user = findByEmail(signupDto.getEmail());
         if (user.isPresent()) throw new BadRequestException("this email has been used before");
         User newUser = new User();
         newUser.setEmail(signupDto.getEmail());
