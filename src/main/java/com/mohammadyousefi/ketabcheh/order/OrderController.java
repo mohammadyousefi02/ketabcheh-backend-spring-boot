@@ -1,5 +1,6 @@
 package com.mohammadyousefi.ketabcheh.order;
 
+import com.mohammadyousefi.ketabcheh.auth.Admin;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,13 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public Response<Order> orderByWallet(HttpServletRequest request, @RequestBody OrderDto orderDto) {
         return orderHandler(request, orderDto, true);
+    }
+
+    @PostMapping("toggle-status/{id}")
+    @Authorization
+    @Admin
+    public Response<String> toggleStatus(@PathVariable Long id) {
+        return new Response<>(orderService.toggleStatus(id));
     }
 
     private Response<Order> orderHandler(HttpServletRequest request, OrderDto orderDto, Boolean useWallet) {
