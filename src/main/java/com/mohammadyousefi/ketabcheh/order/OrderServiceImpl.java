@@ -6,6 +6,8 @@ import com.mohammadyousefi.ketabcheh.cartItem.CartItem;
 import com.mohammadyousefi.ketabcheh.cartItem.CartItemService;
 import com.mohammadyousefi.ketabcheh.cartItem.CartItemType;
 import com.mohammadyousefi.ketabcheh.exception.BadRequestException;
+import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
+import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.profile.Profile;
 import com.mohammadyousefi.ketabcheh.profile.ProfileService;
 import com.mohammadyousefi.ketabcheh.user.User;
@@ -31,6 +33,13 @@ public class OrderServiceImpl implements OrderService {
         this.cartItemService = cartItemService;
         this.profileService = profileService;
         this.bookService = bookService;
+    }
+
+    private Order findById(Long orderId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if(optionalOrder.isEmpty())
+            throw new NotFoundException(ErrorMessages.notFound("order"));
+        return optionalOrder.get();
     }
 
     @Override
@@ -66,6 +75,14 @@ public class OrderServiceImpl implements OrderService {
         cartItemService.clear(orderDto.getUserId());
         newOrder.setOrderItems(orderItems);
         return orderRepository.save(newOrder);
+    }
+
+    @Override
+    public String toggleStatus(Long orderId) {
+        Order order = findById(orderId);
+        order.setDelivered(!order.getDelivered());
+        orderRepository.save(order);
+        return "toggled delivered status successfully";
     }
 
     private Order createOrderObj(OrderDto orderDto) {
