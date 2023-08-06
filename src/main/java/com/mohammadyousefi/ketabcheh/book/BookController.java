@@ -73,6 +73,7 @@ public class BookController {
         images.add(image);
         book.setImages(images);
         if (bookDto.getFile().isEmpty()) throw new BadRequestException("you should upload pdf file");
+        if (bookDto.getFile().getSize() > 500000) throw new BadRequestException("File size should not exceed 500kb");
         String fileName = Upload.uploadHandler(bookDto.getFile(), "books");
         book.setFilename(fileName);
         book.setType(bookDto.getFile().getContentType());
