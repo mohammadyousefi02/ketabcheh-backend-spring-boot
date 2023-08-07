@@ -13,6 +13,7 @@ import com.mohammadyousefi.ketabcheh.image.Image;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import com.mohammadyousefi.ketabcheh.util.Upload;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
     @Admin
-    public Response<Book> create(@ModelAttribute BookDto bookDto) {
+    public Response<Book> create(@Validated @ModelAttribute BookDto bookDto) {
         Book book = new Book();
         Optional<Author> author = authorService.findById(bookDto.getAuthorId());
         if (author.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("author"));
@@ -73,7 +74,7 @@ public class BookController {
         images.add(image);
         book.setImages(images);
         if (bookDto.getFile().isEmpty()) throw new BadRequestException("you should upload pdf file");
-        if (bookDto.getFile().getSize() > 500000) throw new BadRequestException("File size should not exceed 500kb");
+        if (bookDto.getImage().getSize() > 500000) throw new BadRequestException("image size should not exceed 500kb");
         String fileName = Upload.uploadHandler(bookDto.getFile(), "books");
         book.setFilename(fileName);
         book.setType(bookDto.getFile().getContentType());

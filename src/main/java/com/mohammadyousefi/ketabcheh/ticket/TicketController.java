@@ -6,6 +6,7 @@ import com.mohammadyousefi.ketabcheh.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class TicketController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
-    public Response<String> save(HttpServletRequest request, @RequestBody TicketDto ticketDto) {
+    public Response<String> save(HttpServletRequest request, @Validated @RequestBody TicketDto ticketDto) {
         ticketDto.setUserId(getUserId(request));
         return new Response<>(ticketService.save(ticketDto), HttpStatus.CREATED.value());
     }
@@ -48,7 +49,7 @@ public class TicketController {
     @PostMapping("/add-message")
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
-    public Response<TicketMessage> addMessage(HttpServletRequest request, @RequestBody TicketMessageDto ticketMessageDto) {
+    public Response<TicketMessage> addMessage(HttpServletRequest request, @Validated @RequestBody TicketMessageDto ticketMessageDto) {
         ticketMessageDto.setUserId(getUserId(request));
         TicketMessage ticketMessage = ticketService.addMessage(ticketMessageDto);
         simpMessagingTemplate.convertAndSend("/topic/support/" + ticketMessageDto.getTicketId(), ticketMessage);

@@ -6,6 +6,7 @@ import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class AuthorController {
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
     @Admin
-    public Response<Author> createAuthor(@RequestBody CreateAuthorDto createAuthorDto) {
+    public Response<Author> createAuthor(@Validated @RequestBody CreateAuthorDto createAuthorDto) {
         return new Response<>(authorService.save(createAuthorDto), HttpStatus.CREATED.value());
     }
 
