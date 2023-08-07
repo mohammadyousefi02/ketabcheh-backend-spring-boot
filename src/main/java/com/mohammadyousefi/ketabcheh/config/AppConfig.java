@@ -16,10 +16,7 @@ public class AppConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow CORS for all endpoints
-                .allowedOrigins("*") // List of allowed origins
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // List of allowed HTTP methods
-                .allowedHeaders("*") // List of allowed headers
-                .allowCredentials(true);
+                .allowedOrigins("*");
     }
 
     public AppConfig(Interceptor interceptor) {
