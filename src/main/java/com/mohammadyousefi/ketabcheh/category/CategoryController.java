@@ -4,6 +4,7 @@ import com.mohammadyousefi.ketabcheh.auth.Admin;
 import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class CategoryController {
     @Authorization
     @Admin
     @ResponseStatus(HttpStatus.CREATED)
-    public Response<Category> create(@RequestBody CreateCategoryDto createCategoryDto) {
+    public Response<Category> create(@Validated @RequestBody CreateCategoryDto createCategoryDto) {
         return new Response<>(categoryService.save(createCategoryDto), HttpStatus.CREATED.value());
     }
 

@@ -5,6 +5,7 @@ import com.mohammadyousefi.ketabcheh.auth.Authorization;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,14 +20,14 @@ public class OrderController {
     @PostMapping
     @Authorization
     @ResponseStatus(HttpStatus.CREATED)
-    public Response<Order> order(HttpServletRequest request, @RequestBody OrderDto orderDto) {
+    public Response<Order> order(HttpServletRequest request, @Validated @RequestBody OrderDto orderDto) {
         return orderHandler(request, orderDto, false);
     }
 
     @PostMapping("wallet")
     @Authorization
     @ResponseStatus(HttpStatus.CREATED)
-    public Response<Order> orderByWallet(HttpServletRequest request, @RequestBody OrderDto orderDto) {
+    public Response<Order> orderByWallet(HttpServletRequest request, @Validated @RequestBody OrderDto orderDto) {
         return orderHandler(request, orderDto, true);
     }
 

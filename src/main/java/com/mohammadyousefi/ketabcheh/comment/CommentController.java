@@ -9,6 +9,7 @@ import com.mohammadyousefi.ketabcheh.response.Response;
 import com.mohammadyousefi.ketabcheh.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class CommentController {
 
     @PostMapping("/{bookId}")
     @Authorization
-    public Response<String> comment(HttpServletRequest request, @PathVariable Long bookId, @RequestBody CommentDto commentDto) {
+    public Response<String> comment(HttpServletRequest request, @PathVariable Long bookId, @Validated @RequestBody CommentDto commentDto) {
         Optional<Book> bookOptional = bookService.findById(bookId);
         if (bookOptional.isEmpty()) throw new NotFoundException(ErrorMessages.notFound("book"));
 
@@ -35,7 +36,7 @@ public class CommentController {
 
     @PostMapping("/reply/{commentId}")
     @Authorization
-    public Response<String> reply(HttpServletRequest request, @PathVariable Long commentId, @RequestBody CommentDto commentDto) {
+    public Response<String> reply(HttpServletRequest request, @PathVariable Long commentId, @Validated @RequestBody CommentDto commentDto) {
         Comment comment = commentService.findById(commentId);
         return new Response<>(saveComment(request, comment.getBook(), commentDto.getMessage(), comment), HttpStatus.CREATED.value());
     }
