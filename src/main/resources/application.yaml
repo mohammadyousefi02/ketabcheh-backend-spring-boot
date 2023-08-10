@@ -1,4 +1,6 @@
 spring:
+  thymeleaf:
+    cache: false
   datasource:
     url: jdbc:postgresql://localhost:5432/ketabcheh
     username: postgres
@@ -9,7 +11,13 @@ spring:
         enable_lazy_load_no_trans: true
     openInView: false
 
-
+server:
+  port: 1234
 jwt:
   secret: thisismyscretkeyforencodinganddecodingjwttoken
   expiration: 86400000
+
+google:
+  recaptcha:
+    siteKey: 6LfRUpInAAAAACmZKH2vDqaG_s_8M_WPnim-DmFS
+    secretKey: 6LfRUpInAAAAAB4N1JYAE5_nh8pJcMp-Z2lvF-IS
