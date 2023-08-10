@@ -1,0 +1,134 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FEFFFF;
+    direction: rtl;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bank-logo {
+    width: 64px;
+    height: 64px;
+}
+
+.bank-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 32px;
+}
+
+.content {
+    background-color: #F2F3F5;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+span {
+    color: #7D7D7E;
+    font-weight: bold;
+    width: 100px;
+}
+
+.input-container {
+    background: #fff;
+    border: 2px solid #E1E2E3;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.input-container input {
+    background-color: transparent;
+    width: 100%;
+    outline: none;
+    border: none;
+    direction: ltr;
+    padding-left: 4px;
+}
+
+.inputs-container-size {
+    width: 200px;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    min-width: 80px;
+    padding: 4px;
+}
+
+.submit-btn {
+    background: #00C2A4;
+    color: #fff;
+}
+
+.cancel-btn {
+    border: 1px solid #FC1F20;
+    color: #FC1F20;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.self-end {
+    align-self: end;
+}
+
+.space-1 {
+    width: 4px;
+    height: 4px;
+}
+
+.space-2 {
+    width: 8px;
+    height: 8px;
+}
+
+.space-3 {
+    width: 12px;
+    height: 12px;
+}
+
+.space-4 {
+    width: 16px;
+    height: 16px;
+}
+
+.space-5 {
+    width: 20px;
+    height: 20px;
+}
+
+.space-6 {
+    width: 24px;
+    height: 24px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
