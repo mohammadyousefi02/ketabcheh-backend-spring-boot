@@ -33,9 +33,14 @@ public class BookController {
         this.categoryService = categoryService;
     }
 
+//    @GetMapping
+//    public Response<List<Book>> findAll() {
+//        return new Response<>(bookService.findAll());
+//    }
+
     @GetMapping
-    public Response<List<Book>> findAll() {
-        return new Response<>(bookService.findAll());
+    public Response<List<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
+        return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice()));
     }
 
     @GetMapping("/{id}")

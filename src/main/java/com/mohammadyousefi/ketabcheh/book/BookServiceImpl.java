@@ -21,6 +21,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findByFilter(String title, String authorName, Integer minPrice, Integer maxPrice) {
+        return bookRepository.findByFilter(title, authorName, minPrice, maxPrice);
+    }
+
+    @Override
     public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
     }
