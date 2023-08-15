@@ -13,7 +13,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class ExceptionHandlers {
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse<String>> handleException(Exception exception) {
         return generateErrorResponse(exception.getMessage(), exception.getHttpStatus());
     }
