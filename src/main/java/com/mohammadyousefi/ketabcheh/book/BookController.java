@@ -12,6 +12,8 @@ import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
 import com.mohammadyousefi.ketabcheh.image.Image;
 import com.mohammadyousefi.ketabcheh.response.Response;
 import com.mohammadyousefi.ketabcheh.util.Upload;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +41,9 @@ public class BookController {
 //    }
 
     @GetMapping
-    public Response<List<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
-        return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice()));
+    public Response<Page<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
+        PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit());
+        return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice(), pageRequest));
     }
 
     @GetMapping("/{id}")
