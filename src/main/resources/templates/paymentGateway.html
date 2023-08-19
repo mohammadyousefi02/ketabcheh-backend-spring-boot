@@ -1,0 +1,105 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add CSS and JS to Thymeleaf</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <div class="bank-logo">
+            <img th:src="@{/images/meli.png}" alt="bank-logo">
+        </div>
+        <div class="bank-logo">
+            <img th:src="@{/images/melat.png}" alt="bank-logo">
+        </div>
+        <div class="bank-logo">
+            <img th:src="@{/images/saderat.jpg}" alt="bank-logo">
+        </div>
+        <div class="bank-logo">
+            <img th:src="@{/images/ayandeh.png}" alt="bank-logo">
+        </div>
+    </header>
+    <div class="space-6"></div>
+    <form action="/checking-payment" method="post" class="content">
+        <div class="flex">
+            <span>شماره کارت</span>
+            <div class="space-5"></div>
+            <div class="flex justify-content-between inputs-container-size">
+                <div class="input-container">
+                    <input class="card-number" required name="cardNumberFourth"/>
+                </div>
+                <div class="space-4"></div>
+                <div class="input-container">
+                    <input class="card-number" required name="cardNumberThird"/>
+                </div>
+                <div class="space-4"></div>
+                <div class="input-container">
+                    <input class="card-number" required name="cardNumberSecond"/>
+                </div>
+                <div class="space-4"></div>
+                <div class=" input-container">
+                    <input class="card-number" required name="cardNumberFirst"/>
+                </div>
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <span>رمز اینترنتی</span>
+            <div class="space-5"></div>
+            <div class="input-container inputs-container-size">
+                <input required name="cardPassword"/>
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <span>cvv2</span>
+            <div class="space-5"></div>
+            <div class="input-container inputs-container-size">
+                <input required name="cardCvv2"/>
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <span>تاریخ انقضا</span>
+            <div class="space-5"></div>
+            <div class="flex justify-content-between inputs-container-size">
+                <div class="input-container">
+                    <input required name="cardExpirationMonth"/>
+                </div>
+                <div class="space-4"></div>
+                <div class="input-container">
+                    <input required name="cardExpirationYear"/>
+                </div>
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <div class="g-recaptcha" th:attr="data-sitekey=${@captchaConfig.getSiteKey()}"></div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <span>ایمیل (اختیاری)</span>
+            <div class="space-5"></div>
+            <div class="input-container inputs-container-size">
+                <input name="email"/>
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <div class="flex">
+            <button type="submit" class="submit-btn">پرداخت</button>
+            <div class="space-3"></div>
+            <button type="button" class="cancel-btn">انصراف</button>
+            <div class="space-4"></div>
+            <div>
+                <span>زمان باقی مانده:</span>
+                <span id="left-time">10:00</span>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>
