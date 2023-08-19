@@ -41,9 +41,9 @@ public class BookController {
 //    }
 
     @GetMapping
-    public Page<Book> findByFilter(@ModelAttribute BookFilter bookFilter) {
+    public Response<Page<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
         PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit());
-        return bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice(), pageRequest);
+        return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice(), pageRequest));
     }
 
     @GetMapping("/{id}")
