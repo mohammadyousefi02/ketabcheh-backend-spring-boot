@@ -2,6 +2,8 @@ package com.mohammadyousefi.ketabcheh.book;
 
 import com.mohammadyousefi.ketabcheh.exception.ErrorMessages;
 import com.mohammadyousefi.ketabcheh.exception.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByFilter(String title, String authorName, Integer minPrice, Integer maxPrice) {
-        return bookRepository.findByFilter(title, authorName, minPrice, maxPrice);
+    public Page<Book> findByFilter(String title, String authorName, Integer minPrice, Integer maxPrice, Pageable pageable) {
+        return bookRepository.findByFilter(title, authorName, minPrice, maxPrice, pageable);
     }
 
     @Override
