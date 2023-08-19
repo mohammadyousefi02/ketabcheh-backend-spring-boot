@@ -5,11 +5,11 @@ const cardNumberInputs = $.querySelectorAll(".card-number");
 
 cardNumberInputs.forEach((cardNumberInput, index) => {
     cardNumberInput.addEventListener("focus", () => {
-        if(index > 0 && cardNumberInputs[index - 1].value.length < 4) cardNumberInputs[index - 1].focus()
+        if(index !== cardNumberInputs.length - 1 && cardNumberInputs[index + 1].value.length < 4) cardNumberInputs[index + 1].focus()
     })
 
     cardNumberInput.addEventListener("input", () => {
-        if(cardNumberInput.value.length === 4 && index < 3) cardNumberInputs[index + 1].focus()
+        if(cardNumberInput.value.length === 4 && index > 0) cardNumberInputs[index - 1].focus()
         else if(cardNumberInput.value.length > 4) cardNumberInput.value = cardNumberInput.value.substring(0, 4);
     })
 })
@@ -17,12 +17,12 @@ cardNumberInputs.forEach((cardNumberInput, index) => {
 const cancelBtn = $.querySelector(".cancel-btn");
 cancelBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "/cancelpp"
+    window.location.href = "/cancel"
 })
 
 const checkLeftTime = () => {
     if (leftTimeSecond === 0) {
-        window.location.href = "/some-err-page"
+        window.location.href = "/cancel"
     } else {
         leftTime.innerHTML = secToMin(leftTimeSecond)
         leftTimeSecond--;
