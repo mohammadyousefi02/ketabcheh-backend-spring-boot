@@ -37,16 +37,22 @@ public class OrderServiceImpl implements OrderService {
 
     private Order findById(Long orderId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        if(optionalOrder.isEmpty())
+        if (optionalOrder.isEmpty())
             throw new NotFoundException(ErrorMessages.notFound("order"));
         return optionalOrder.get();
+    }
+
+    @Override
+    public List<Order> findByUserId(Long userId) {
+        return orderRepository.findByUser_Id(userId).orElse(new ArrayList<>());
     }
 
     @Override
     @Transactional
     public Order order(OrderDto orderDto, Boolean useWallet) {
         Optional<List<CartItem>> cartItemList = cartItemService.findByUserId(orderDto.getUserId());
-        if (cartItemList.isEmpty()) throw new BadRequestException("you should add something to your cart first");
+        if (cartItemList.isEmpty() || cartItemList.get().isEmpty())
+            throw new BadRequestException("you should add something to your cart first");
 
         Order newOrder = createOrderObj(orderDto);
 

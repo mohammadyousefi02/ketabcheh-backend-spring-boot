@@ -18,7 +18,7 @@ public class RateController {
 
     @PostMapping("/{bookId}")
     @Authorization
-    public Response<String> save(HttpServletRequest request, @PathVariable Long bookId, @Validated @RequestBody RateDto rateDto) {
+    public Response<String> rate(HttpServletRequest request, @PathVariable Long bookId, @Validated @RequestBody RateDto rateDto) {
         rateDto.setUserId((Long) request.getAttribute("userId"));
         rateDto.setBookId(bookId);
         return new Response<>(rateService.save(rateDto), HttpStatus.CREATED.value());

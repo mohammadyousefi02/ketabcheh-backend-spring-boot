@@ -5,6 +5,7 @@ import com.mohammadyousefi.ketabcheh.book.Book;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,5 +20,5 @@ public class Author {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"author"})
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 }

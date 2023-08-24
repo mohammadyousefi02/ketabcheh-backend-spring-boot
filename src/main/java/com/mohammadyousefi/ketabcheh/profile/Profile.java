@@ -1,6 +1,6 @@
 package com.mohammadyousefi.ketabcheh.profile;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.user.User;
 import jakarta.persistence.*;
@@ -16,11 +16,11 @@ public class Profile {
     @Column(name = "profile_id")
     private Long id;
 
-    private Long wallet;
+    private Long wallet = 0L;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"profile"})
+    @JsonIgnore
     private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)

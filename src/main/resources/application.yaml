@@ -11,8 +11,6 @@ spring:
         enable_lazy_load_no_trans: true
     openInView: false
 
-server:
-  port: 1234
 jwt:
   secret: thisismyscretkeyforencodinganddecodingjwttoken
   expiration: 86400000

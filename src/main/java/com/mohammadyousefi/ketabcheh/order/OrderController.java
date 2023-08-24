@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -15,6 +17,12 @@ public class OrderController {
 
     public OrderController(OrderServiceImpl orderService) {
         this.orderService = orderService;
+    }
+
+    @GetMapping
+    @Authorization
+    public List<Order> findByUserId(HttpServletRequest request) {
+        return orderService.findByUserId((Long) request.getAttribute("userId"));
     }
 
     @PostMapping

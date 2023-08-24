@@ -1,6 +1,6 @@
 package com.mohammadyousefi.ketabcheh.cartItem;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.user.User;
 import jakarta.persistence.*;
@@ -22,7 +22,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"cart"})
+    @JsonIgnore
     private User user;
 
     @Enumerated(EnumType.STRING)

@@ -6,13 +6,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/cartItem")
+@RequestMapping("/api/v1/cart")
 public class CartItemController {
     private final CartItemService cartItemService;
 
     public CartItemController(CartItemService cartItemService) {
         this.cartItemService = cartItemService;
+    }
+
+    @GetMapping
+    @Authorization
+    public Response<List<CartItem>> findUserCart(HttpServletRequest request) {
+        List<CartItem> cart = cartItemService.findByUserId((Long) request.getAttribute("userId")).orElse(new ArrayList<>());
+        return new Response<>(cart);
     }
 
     @PostMapping("/offline/add/{bookId}")
@@ -31,23 +41,23 @@ public class CartItemController {
         return new Response<>(res, HttpStatus.CREATED.value());
     }
 
-    @DeleteMapping("/offline/decreaseQuantity/{bookId}")
+    @DeleteMapping("/offline/decreaseQuantity/{cartItemId}")
     @Authorization
-    public Response<String> decreaseCartQuantity(HttpServletRequest request, @PathVariable Long bookId) {
-        String res = cartItemService.decreaseQuantity(getId(request), bookId);
+    public Response<String> decreaseCartQuantity(HttpServletRequest request, @PathVariable Long cartItemId) {
+        String res = cartItemService.decreaseQuantity(getId(request), cartItemId);
         return new Response<>(res);
     }
 
-    @DeleteMapping("/offline/remove/{bookId}")
+    @DeleteMapping("/offline/remove/{cartItemId}")
     @Authorization
-    public Response<String> removeOfflineItem(HttpServletRequest request, @PathVariable Long bookId) {
-        return new Response<>(cartItemService.removeItem(getId(request), bookId, CartItemType.OFFLINE));
+    public Response<String> removeOfflineItem(HttpServletRequest request, @PathVariable Long cartItemId) {
+        return new Response<>(cartItemService.removeItem(getId(request), cartItemId, CartItemType.OFFLINE));
     }
 
-    @DeleteMapping("/online/remove/{bookId}")
+    @DeleteMapping("/online/remove/{cartItemId}")
     @Authorization
-    public Response<String> removeOnlineItem(HttpServletRequest request, @PathVariable Long bookId) {
-        return new Response<>(cartItemService.removeItem(getId(request), bookId, CartItemType.ONLINE));
+    public Response<String> removeOnlineItem(HttpServletRequest request, @PathVariable Long cartItemId) {
+        return new Response<>(cartItemService.removeItem(getId(request), cartItemId, CartItemType.ONLINE));
     }
 
     @DeleteMapping("/clear")
