@@ -1,6 +1,8 @@
 package com.mohammadyousefi.ketabcheh.comment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.user.User;
 import jakarta.persistence.*;
@@ -20,16 +22,16 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "reply_to")
-    @JsonIgnoreProperties({"comments"})
+    @JsonIgnore
     private Comment replyTo;
 
     @OneToMany(mappedBy = "replyTo", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"comment"})
+    @JsonIgnoreProperties({"comment", "book"})
     private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"comments"})
+    @JsonIncludeProperties({"id", "username", "role"})
     private User user;
 
     @ManyToOne
