@@ -1,9 +1,9 @@
 package com.mohammadyousefi.ketabcheh.book;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+import validator.FileSize;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ public class BookDto {
     @NotNull
     private List<Long> categoriesIds;
     @NotNull
-    @Size(max = 1000000)
+    @FileSize
     private MultipartFile file;
     @NotNull
-    @Size(max = 500000)
+    @FileSize(maxFileSize = 500_000)
     private MultipartFile image;
 }
