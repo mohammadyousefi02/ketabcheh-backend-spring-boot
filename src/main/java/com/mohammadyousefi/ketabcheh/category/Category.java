@@ -6,6 +6,7 @@ import com.mohammadyousefi.ketabcheh.book.Book;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,5 +32,5 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"categories"})
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 }
