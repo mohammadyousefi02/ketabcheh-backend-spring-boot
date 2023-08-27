@@ -1,6 +1,7 @@
 package com.mohammadyousefi.ketabcheh.rate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.mohammadyousefi.ketabcheh.book.Book;
 import com.mohammadyousefi.ketabcheh.user.User;
 import jakarta.persistence.*;
@@ -18,11 +19,11 @@ public class Rate {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"rates"})
+    @JsonIncludeProperties({"id", "username", "role"})
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties({"rates"})
+    @JsonIgnore
     private Book book;
 }

@@ -9,6 +9,7 @@ import com.mohammadyousefi.ketabcheh.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,11 @@ public class SaveServiceImpl implements SaveService {
         this.saveRepository = saveRepository;
         this.userService = userService;
         this.bookService = bookService;
+    }
+
+    @Override
+    public List<Save> findByUserId(Long userId) {
+        return saveRepository.findByUser_Id(userId);
     }
 
     @Override

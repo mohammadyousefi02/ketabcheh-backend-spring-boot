@@ -14,6 +14,7 @@ import com.mohammadyousefi.ketabcheh.response.Response;
 import com.mohammadyousefi.ketabcheh.util.Upload;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,13 @@ public class BookController {
 
     @GetMapping
     public Response<Page<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
-        PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit());
+        Sort price = null;
+        Sort sort = Sort.by(bookFilter.isOld() ? Sort.Direction.ASC : Sort.Direction.DESC, "id");
+        boolean hasPriceFilter = bookFilter.getPrice() != null;
+        if(hasPriceFilter) {
+            price = Sort.by(Sort.Direction.fromString(bookFilter.getPrice()), "price").and(sort);
+        }
+        PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit(), hasPriceFilter? price : sort);
         return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice(), pageRequest));
     }
 
