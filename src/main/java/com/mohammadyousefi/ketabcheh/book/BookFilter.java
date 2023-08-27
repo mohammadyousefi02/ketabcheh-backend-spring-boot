@@ -11,4 +11,5 @@ public class BookFilter {
     private int page = 1;
     private int limit = 10;
     private boolean old = false;
+    private String price;
 }
