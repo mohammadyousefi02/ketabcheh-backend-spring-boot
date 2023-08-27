@@ -29,6 +29,12 @@ public class TicketController {
         return new Response<>(ticketService.findForAdmins());
     }
 
+    @GetMapping("/{id}")
+    @Authorization
+    public Response<Ticket> findById(@PathVariable Long id) {
+        return new Response<>(ticketService.findById(id));
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Authorization
