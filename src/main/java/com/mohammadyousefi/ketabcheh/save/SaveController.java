@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/save")
 public class SaveController {
@@ -13,6 +15,12 @@ public class SaveController {
 
     public SaveController(SaveService saveService) {
         this.saveService = saveService;
+    }
+
+    @GetMapping
+    @Authorization
+    public List<Save> findByUserId(HttpServletRequest request) {
+        return saveService.findByUserId((Long) request.getAttribute("userId"));
     }
 
     @PostMapping("/{bookId}")
