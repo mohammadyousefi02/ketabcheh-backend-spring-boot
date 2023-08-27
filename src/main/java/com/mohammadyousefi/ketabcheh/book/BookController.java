@@ -43,8 +43,13 @@ public class BookController {
 
     @GetMapping
     public Response<Page<Book>> findByFilter(@ModelAttribute BookFilter bookFilter) {
+        Sort price = null;
         Sort sort = Sort.by(bookFilter.isOld() ? Sort.Direction.ASC : Sort.Direction.DESC, "id");
-        PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit(), sort);
+        boolean hasPriceFilter = bookFilter.getPrice() != null;
+        if(hasPriceFilter) {
+            price = Sort.by(Sort.Direction.fromString(bookFilter.getPrice()), "price").and(sort);
+        }
+        PageRequest pageRequest = PageRequest.of(bookFilter.getPage() - 1, bookFilter.getLimit(), hasPriceFilter? price : sort);
         return new Response<>(bookService.findByFilter(bookFilter.getTitle(), bookFilter.getAuthorName(), bookFilter.getMinPrice(), bookFilter.getMaxPrice(), pageRequest));
     }
 
