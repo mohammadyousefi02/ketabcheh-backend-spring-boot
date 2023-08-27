@@ -34,8 +34,8 @@ public class Comment {
     @JsonIncludeProperties({"id", "username", "role"})
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    @JsonIgnoreProperties({"comments"})
+    @JsonIgnore
     private Book book;
 }
