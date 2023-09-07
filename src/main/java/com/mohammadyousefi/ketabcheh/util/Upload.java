@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Upload {
-    private static final String UPLOAD_DIR = "src/main/resources/public";
+    private static final String UPLOAD_DIR = "src/main/resources/static";
 
     private Upload() {
     }

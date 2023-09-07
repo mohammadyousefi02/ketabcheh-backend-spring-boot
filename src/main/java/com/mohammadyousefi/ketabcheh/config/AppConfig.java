@@ -23,7 +23,8 @@ public class AppConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow CORS for all endpoints
-                .allowedOrigins("*");
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST","PUT", "DELETE");
     }
 
     @Override

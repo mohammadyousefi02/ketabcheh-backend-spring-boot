@@ -19,8 +19,8 @@ public class SaveController {
 
     @GetMapping
     @Authorization
-    public List<Save> findByUserId(HttpServletRequest request) {
-        return saveService.findByUserId((Long) request.getAttribute("userId"));
+    public Response<List<Save>> findByUserId(HttpServletRequest request) {
+        return new Response<>(saveService.findByUserId((Long) request.getAttribute("userId")));
     }
 
     @PostMapping("/{bookId}")
