@@ -19,6 +19,7 @@ public class Comment {
     private Long id;
 
     private String message;
+    private Long commentAt;
 
     @ManyToOne
     @JoinColumn(name = "reply_to")
